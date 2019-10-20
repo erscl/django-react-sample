@@ -107,9 +107,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ja-jp'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tokyo'
 
 USE_I18N = True
 
@@ -125,6 +125,7 @@ STATIC_URL = '/static/'
 
 # BASE_URLをjsonから読み取る。サブパスで動かす際にこの設定が必要。
 # TODO : リバースプロキシ越しに動かした場合にこの設定がプロジェクト上の全てのケースで有効かどうかを確認する
+# TODO : サブディレクトリで動かしたとき、AdminページヘのアクセスがログインURLへのリダイレクトで失敗する。DjangoデフォルトのAdminページ使うなら解決する。
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -133,11 +134,8 @@ with open(os.path.join(BASE_DIR, 'config.json'), 'r') as rf:
     CONFIG_JSON = json.load(rf)
 
 BASE_URL = CONFIG_JSON['base_url']
-from urllib import parse
 BASE_URL_PATH = parse.urlparse(BASE_URL).path
 STATIC_URL = parse.urlparse(parse.urljoin(BASE_URL, 'static/')).path
-# print(BASE_URL)
-# print(STATIC_URL)
 # ↑ここは先頭にスラッシュ入れちゃだめ。融通効かない…
 
 REACT_HOME = os.path.join(BASE_DIR, 'frontend', 'build')
